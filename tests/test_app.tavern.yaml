@@ -1,0 +1,68 @@
+test_name: Test CRUD Orders
+
+stages:
+  - name: Get Token
+    request:
+      url: http://localhost:8888/v1/auth
+      method: POST
+      json:
+        username: "geraldo@geraldoandrade.com"
+        password: "123456"
+      headers:
+        content-type: application/json
+    response:
+      status_code: 200
+      save:
+        body:
+          access_token: access_token
+
+  - name: Create One Order Correctly
+    request:
+      url: http://localhost:8888/v1/orders
+      method: POST
+      json:
+        id: 1
+        client_id: 1
+        products:
+          - 1
+          - 2
+          - 3
+      headers:
+        content-type: application/json
+        Authorization: "JWT {access_token}"
+    response:
+      status_code: 200
+      body:
+        id: 1
+        client_id: 1
+        products:
+          - 1
+          - 2
+          - 3
+
+  - name: Read New Order
+    request:
+      url: http://localhost:8888/v1/orders/1
+      method: GET
+      headers:
+        content-type: application/json
+        Authorization: "JWT {access_token}"
+    response:
+      status_code: 200
+      body:
+        id: 1
+        client_id: 1
+        products:
+          - 1
+          - 2
+          - 3
+
+  - name: DELETE New Order
+    request:
+      url: http://localhost:8888/v1/orders/1
+      method: DELETE
+      headers:
+        content-type: application/json
+        Authorization: "JWT {access_token}"
+    response:
+      status_code: 200
