@@ -11,6 +11,6 @@ ENV FLASK_APP=app.py
 
 RUN if [ "$FLASK_ENV" = "development" ]; then pip install -r requirements/dev.txt; else pip install -r requirements/prod.txt; fi
 
-EXPOSE 5000
+EXPOSE 8888
 
 CMD ["flask", "run", "--host 0.0.0.0", "--port 8888"]
